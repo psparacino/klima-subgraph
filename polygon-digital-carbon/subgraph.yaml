@@ -445,6 +445,30 @@ dataSources:
         - event: LogRebase(indexed uint256,uint256,uint256)
           handler: handleRebase
       file: ./src/sKlimaV1.ts
+  - kind: ethereum/contract
+    name: ProjectInfo
+    network: mumbai
+    source:
+      address: '0xd412DEc7cc5dCdb41bCD51a1DAb684494423A775'
+      abi: ProjectInfo
+      startBlock: 46541534
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/ProjectInfoContract.ts
+      entities:
+        - IpfsProjectInfo
+        - IpfsContent
+        - CarbonProject
+      abis:
+        - name: ProjectInfo
+          file: ../lib/abis/ProjectInfo.json
+      eventHandlers:
+        - event: ProjectInfoUpdated(string)
+          handler: handleProjectInfoUpdated
+        - event: TestEvent()
+          handler: handleTestEvent      
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract
@@ -518,3 +542,16 @@ templates:
         - event: ExAnteMinted(indexed uint256,indexed uint256,indexed address,uint256)
           handler: handleExAnteMinted
       file: ./src/TransferHandler.ts
+  - name: IpfsContent
+    kind: file/ipfs
+    mapping:
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/utils/ProjectInfo.ts
+      handler: handleCreateProjects
+      entities:
+        - CarbonProject
+      abis:
+        - name: ProjectInfo
+          file: ../lib/abis/ProjectInfo.json
+

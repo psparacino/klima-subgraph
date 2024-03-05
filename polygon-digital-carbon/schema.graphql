@@ -162,6 +162,14 @@ type CarbonProject @entity {
 
   "Carbon credit tokens related to this project"
   carbonCredits: [CarbonCredit!]! @derivedFrom(field: "project")
+
+  "IPFS project list version related to this project"
+  ipfsProjectInfo: IpfsProjectInfo @relation
+}
+
+type IpfsProjectInfo @entity {
+  id: ID!
+  projectList: [CarbonProject!]! @derivedFrom(field: "ipfsProjectInfo")
 }
 
 type CarbonCredit @entity {
